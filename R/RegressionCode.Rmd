@@ -1,0 +1,316 @@
+---
+title: "linregcode"
+author: "Ryley"
+date: "2024-04-23"
+output:
+  word_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+setwd("C:\\Users\\ryley\\OneDrive\\Desktop\\firebase\\Ryley\\public\\Health Insurance Cost Prediction Using Regression")
+healthcareins = read.csv("insurance.csv")
+names(healthcareins)
+```
+
+
+```{r}
+
+```
+
+Graphing Predictor Variables Against the Response Variable
+
+```{r}
+library(ggplot2)
+ggplot(healthcareins, aes(x = age, y = charges, color = smoker)) +
+ geom_point() +
+ labs(title = "Charges vs. Age by Smoker Status")
+
+ggsave("C:\\Users\\ryley\\OneDrive\\Desktop\\GitHub\\Heathcare Insurance Predictions\\Figures\\ChargesVAgeBySmoker.png",
+  width = 8,
+  height = 6,
+)
+```
+
+```{r}
+ggplot(healthcareins, aes(x = children, y = charges, color=smoker)) +
+ geom_point() +
+ labs(title = "Charges vs. children by Smoker Status")
+
+```
+
+```{r}
+ggplot(healthcareins, aes(x = region, y = charges)) +
+ geom_boxplot() +
+ labs(title = "Charges by Region")
+
+```
+
+```{r}
+ggplot(healthcareins, aes(x = age, y = charges, color = sex)) +
+ geom_point(alpha = 0.6) +
+ facet_wrap(~smoker) +
+ labs(title = "Charges vs. Age, Faceted by Smoker Status and Colored by Sex")
+
+```
+
+```{r}
+ggplot(healthcareins, aes(x = bmi, y = charges, color = smoker)) +
+ geom_point(alpha = 0.6) +
+ geom_smooth(method = "lm") +
+ labs(title = "Interaction of BMI and Smoker Status on Charges")
+
+```
+
+```{r}
+ggplot(healthcareins, aes(x = charges, fill = smoker)) +
+ geom_density(alpha = 0.5) +
+ facet_grid(smoker ~ .) +
+ labs(title = "Density of Charges by Smoker Status")
+
+```
+
+Full Model
+
+```{r}
+fullmodel <- lm(charges ~ age + sex + bmi + children + smoker + region, data = healthcareins)
+summary(fullmodel)
+
+```
+
+Interactions:
+
+```{r}
+# Base model with Age and BMI
+simple_model_age_bmi <- lm(charges ~ age + bmi, data = healthcareins)
+# Base model with Smoker and Age
+simple_model_smoker_age <- lm(charges ~ smoker + age, data = healthcareins)
+# Base model with Smoker and BMI
+simple_model_smoker_bmi <- lm(charges ~ smoker + bmi, data = healthcareins)
+```
+
+```{r}
+# Base model with Age and BMI
+interaction_model_age_bmi <- lm(charges ~ age + bmi + age * bmi, data = healthcareins)
+# Base model with Smoker and Age
+interaction_model_smoker_age <- lm(charges ~ smoker + age + smoker * age, data = healthcareins)
+# Base model with Smoker and BMI
+interaction_model_smoker_bmi <- lm(charges ~ smoker+ bmi+ smoker * bmi, data = healthcareins)
+```
+
+```{r}
+# ANOVA for Age and BMI
+anova_age_bmi <- anova(simple_model_age_bmi, interaction_model_age_bmi)
+anova_age_bmi
+
+```
+
+```{r}
+# ANOVA for Smoker and Age
+anova_smoker_age <- anova(simple_model_smoker_age, interaction_model_smoker_age)
+anova_smoker_age
+```
+
+```{r}
+# ANOVA for Smoker and BMI
+anova_smoker_bmi <- anova(simple_model_smoker_bmi, interaction_model_smoker_bmi)
+anova_smoker_bmi
+```
+
+```{r}
+simple_model_age_sex_bmi <- lm(charges ~ age + sex + bmi, data = healthcareins)
+interaction_model_age_sex_bmi <- lm(charges ~ sex + bmi+ age + age * bmi+ bmi * sex+ age* sex + age * bmi * sex, data = healthcareins)
+# Compare the two models using ANOVA
+model_comparison <- anova(simple_model_age_sex_bmi, interaction_model_age_sex_bmi)
+model_comparison
+
+```
+
+```{r}
+simple_model_age_smoker_bmi <- lm(charges ~ smoker + bmi+ age, data = healthcareins)
+interaction_model_age_smoker_bmi <- lm(charges ~ smoker + bmi+ age + age * bmi+ bmi * smoker+ age* smoker + age * bmi * smoker, data = healthcareins)
+
+model_comparison2 <- anova(simple_model_age_smoker_bmi, interaction_model_age_smoker_bmi)
+model_comparison2
+```
+
+```{r}
+summary(interaction_model_age_smoker_bmi)
+```
+
+```{r}
+interactions=lm(charges~.^2,data=healthcareins[,-1])
+step(interactions, direction = "both")
+```
+
+```{r}
+interaction_model_full=lm(charges ~ sex + bmi + children + smoker + region + sex*children + bmi*smoker + bmi*region, healthcareins)
+summary(interaction_model_full)
+```
+
+
+
+
+backwards
+
+```{r}
+step(fullmodel, direction = "backward")
+```
+
+forwards
+
+```{r}
+ins_mod_start = lm(charges ~ 1, data = healthcareins)
+ins_mod_forw_aic = step(
+  ins_mod_start, 
+  scope = charges ~ age + sex + bmi + children + smoker + region, 
+  direction = "forward")
+```
+
+stepwise
+
+```{r}
+step(fullmodel, direction = "both")
+```
+
+```{r}
+AIC_BIC_model=lm(charges ~ age + bmi + children + smoker + region, healthcareins)
+summary(AIC_BIC_model)
+```
+
+
+
+Quadratic
+
+```{r}
+quadratic = lm(charges~age+bmi+children+sex+smoker+region+I(age^2)+I(bmi^2), healthcareins)
+summary(quadratic)
+
+```
+
+```{r}
+#install.packages("leaps")
+install.packages("olsrr")
+```
+
+best subset selection:
+
+```{r}
+library(leaps)
+all=regsubsets(charges~.,healthcareins,nvmax=6)
+```
+
+```{r}
+plot(summary(all)$rsq ~ seq(6), type = "b", col = "red")
+
+
+```
+
+```{r}
+plot(summary(all)$adj ~ seq(6), type = "b", col = "red")
+
+```
+
+```{r}
+plot(summary(all)$cp ~ seq(6), type = "b", col = "red")
+
+```
+
+```{r}
+plot(summary(all)$bic ~ seq(6), type = "b", col = "red")
+
+```
+
+```{r}
+library(olsrr)
+FitAll <- lm(charges ~ ., healthcareins)
+bestAIC <- ols_step_best_subset(FitAll)
+values=bestAIC$metrics$aic
+plot(values ~ seq(6), type = "b", col = "red")
+```
+
+All of the best subset selection charts advise to choose 3 predictor variables for the best model
+
+```{r}
+summary(all)
+```
+
+From this summary we can see the variables are smoker, age, and bmi
+
+```{r}
+bestsubsetmodel=lm(charges ~ smoker + age+ bmi, healthcareins)
+summary(bestsubsetmodel)
+```
+
+cross validation
+
+```{r}
+
+library(DAAG)
+```
+
+```{r}
+#CVlm(healthcareins,charges ~  age+ bmi + smoker + age* bmi *smoker, m=3)
+```
+
+ms=24356280
+
+```{r}
+#CVlm(healthcareins,charges ~  sex + bmi + children + smoker + region + sex*children + bmi*smoker + bmi*region, m=3)
+```
+
+ms=37159125
+
+```{r}
+#CVlm(healthcareins, charges ~  age + bmi + children + smoker + region, m=3)
+```
+
+ms=37217608
+
+```{r}
+#CVlm(healthcareins,charges ~  age+ bmi + children + smoker + region + I(age^2) + I(bmi^2), m=3)
+```
+
+ms = 36703796
+
+```{r}
+#CVlm(healthcareins,charges ~  age+ bmi + smoker, m=3)
+```
+
+ms=37380135
+
+Final Model
+
+```{r}
+interaction_model_age_smoker_bmi <- lm(charges ~ smoker + bmi+ age + age * bmi+ bmi * smoker+ age* smoker + age * bmi * smoker, data = healthcareins)
+summary(interaction_model_age_smoker_bmi)
+```
+
+Intercept: The predicted average healthcare Insurance Charge for non-smokers is -1.483e+03
+
+slope for smokeryes: The predicted average difference between the healthcare insurance charges for smokers and nonsmokers is -1.242e+04
+
+slope for bmi: For every 1 unit increase in bmi, healthcare insurance charges decrease by -1.943e+01
+
+slope for age: For every 1 unit increase in age, healthcare insurance charges increase by 2.458e+02
+
+interaction for bmi and age: The difference in slopes between bmi and age has an estimate of approximately 6.835e-01
+
+interaction for bmi and smokeryes: The difference in slopes between being a smoker and bmi has an estimate of approximately 1.184e+03
+
+interaction for age and smokeryes: The difference in slopes between being a smoker and age has an estimate of approximately -2.068e+02
+
+interaction for age, smokeryes, and bmi: The difference in slopes between being a smoker, age, and bmi has an estimate of approximately 6.624e+00
+
+Rsq = 83.68% of the variation in healthcare insurance charges can be explained by the final model
+
+$H_{0}: \beta_{1}=\beta_{2}=\beta_{3}=\beta_{4}=\beta_{5}=\beta_{6}=\beta_{7}=\beta_{8}=0$ The model is not useful in predicting healthcare insurance charges $H_{A}:$ at least one $\beta_{i} \neq 0$ the model is useful in predicting healthcare insurance charges
+
+p-value is less than 2.2e-16 and less than $\alpha = 0.01$ so we reject the $H_{0}$ and conclude that the model is useful in predicting the healthcare insurance charges
+
+
+

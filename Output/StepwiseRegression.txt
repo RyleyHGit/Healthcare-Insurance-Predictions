@@ -1,0 +1,163 @@
+BACKWARDS
+
+Start:  AIC=23316.43
+charges ~ age + sex + bmi + children + smoker + region
+
+           Df  Sum of Sq        RSS   AIC
+- sex       1 5.7164e+06 4.8845e+10 23315
+<none>                   4.8840e+10 23316
+- region    3 2.3343e+08 4.9073e+10 23317
+- children  1 4.3755e+08 4.9277e+10 23326
+- bmi       1 5.1692e+09 5.4009e+10 23449
+- age       1 1.7124e+10 6.5964e+10 23717
+- smoker    1 1.2245e+11 1.7129e+11 24993
+
+Step:  AIC=23314.58
+charges ~ age + bmi + children + smoker + region
+
+           Df  Sum of Sq        RSS   AIC
+<none>                   4.8845e+10 23315
+- region    3 2.3320e+08 4.9078e+10 23315
+- children  1 4.3596e+08 4.9281e+10 23325
+- bmi       1 5.1645e+09 5.4010e+10 23447
+- age       1 1.7151e+10 6.5996e+10 23715
+- smoker    1 1.2301e+11 1.7186e+11 24996
+
+Call:
+lm(formula = charges ~ age + bmi + children + smoker + region, 
+    data = healthcareins)
+
+Coefficients:
+    (Intercept)              age              bmi         children  
+       -11990.3            257.0            338.7            474.6  
+      smokeryes  regionnorthwest  regionsoutheast  regionsouthwest  
+        23836.3           -352.2          -1034.4           -959.4  
+
+
+
+FORWARDS
+
+Start:  AIC=25160.18
+charges ~ 1
+
+           Df  Sum of Sq        RSS   AIC
++ smoker    1 1.2152e+11 7.4554e+10 23868
++ age       1 1.7530e+10 1.7854e+11 25037
++ bmi       1 7.7134e+09 1.8836e+11 25109
++ children  1 9.0660e+08 1.9517e+11 25156
++ region    3 1.3008e+09 1.9477e+11 25157
++ sex       1 6.4359e+08 1.9543e+11 25158
+<none>                   1.9607e+11 25160
+
+Step:  AIC=23868.38
+charges ~ smoker
+
+           Df  Sum of Sq        RSS   AIC
++ age       1 1.9928e+10 5.4626e+10 23454
++ bmi       1 7.4856e+09 6.7069e+10 23729
++ children  1 7.5272e+08 7.3802e+10 23857
+<none>                   7.4554e+10 23868
++ sex       1 1.4213e+06 7.4553e+10 23870
++ region    3 1.0752e+08 7.4447e+10 23873
+
+Step:  AIC=23454.24
+charges ~ smoker + age
+
+           Df  Sum of Sq        RSS   AIC
++ bmi       1 5112896646 4.9513e+10 23325
++ children  1  459283727 5.4167e+10 23445
+<none>                   5.4626e+10 23454
++ sex       1    2225509 5.4624e+10 23456
++ region    3  138426748 5.4488e+10 23457
+
+Step:  AIC=23324.76
+charges ~ smoker + age + bmi
+
+           Df Sum of Sq        RSS   AIC
++ children  1 434769398 4.9078e+10 23315
++ region    3 232012208 4.9281e+10 23325
+<none>                  4.9513e+10 23325
++ sex       1   3942912 4.9509e+10 23327
+
+Step:  AIC=23314.96
+charges ~ smoker + age + bmi + children
+
+         Df Sum of Sq        RSS   AIC
++ region  3 233200844 4.8845e+10 23315
+<none>                4.9078e+10 23315
++ sex     1   5486063 4.9073e+10 23317
+
+Step:  AIC=23314.58
+charges ~ smoker + age + bmi + children + region
+
+       Df Sum of Sq        RSS   AIC
+<none>              4.8845e+10 23315
++ sex   1   5716429 4.8840e+10 23316
+
+
+BOTH
+
+Start:  AIC=23316.43
+charges ~ age + sex + bmi + children + smoker + region
+
+           Df  Sum of Sq        RSS   AIC
+- sex       1 5.7164e+06 4.8845e+10 23315
+<none>                   4.8840e+10 23316
+- region    3 2.3343e+08 4.9073e+10 23317
+- children  1 4.3755e+08 4.9277e+10 23326
+- bmi       1 5.1692e+09 5.4009e+10 23449
+- age       1 1.7124e+10 6.5964e+10 23717
+- smoker    1 1.2245e+11 1.7129e+11 24993
+
+Step:  AIC=23314.58
+charges ~ age + bmi + children + smoker + region
+
+           Df  Sum of Sq        RSS   AIC
+<none>                   4.8845e+10 23315
+- region    3 2.3320e+08 4.9078e+10 23315
++ sex       1 5.7164e+06 4.8840e+10 23316
+- children  1 4.3596e+08 4.9281e+10 23325
+- bmi       1 5.1645e+09 5.4010e+10 23447
+- age       1 1.7151e+10 6.5996e+10 23715
+- smoker    1 1.2301e+11 1.7186e+11 24996
+
+Call:
+lm(formula = charges ~ age + bmi + children + smoker + region, 
+    data = healthcareins)
+
+Coefficients:
+    (Intercept)              age              bmi         children  
+       -11990.3            257.0            338.7            474.6  
+      smokeryes  regionnorthwest  regionsoutheast  regionsouthwest  
+        23836.3           -352.2          -1034.4           -959.4  
+
+
+
+CHOSENMODEL
+
+
+Call:
+lm(formula = charges ~ age + bmi + children + smoker + region, 
+    data = healthcareins)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-11367.2  -2835.4   -979.7   1361.9  29935.5 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(>|t|)    
+(Intercept)     -11990.27     978.76 -12.250  < 2e-16 ***
+age                256.97      11.89  21.610  < 2e-16 ***
+bmi                338.66      28.56  11.858  < 2e-16 ***
+children           474.57     137.74   3.445 0.000588 ***
+smokeryes        23836.30     411.86  57.875  < 2e-16 ***
+regionnorthwest   -352.18     476.12  -0.740 0.459618    
+regionsoutheast  -1034.36     478.54  -2.162 0.030834 *  
+regionsouthwest   -959.37     477.78  -2.008 0.044846 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 6060 on 1330 degrees of freedom
+Multiple R-squared:  0.7509,	Adjusted R-squared:  0.7496 
+F-statistic: 572.7 on 7 and 1330 DF,  p-value: < 2.2e-16
+

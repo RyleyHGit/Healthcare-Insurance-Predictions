@@ -1,0 +1,110 @@
+Analysis of Variance Table
+
+Model 1: charges ~ age + bmi
+Model 2: charges ~ age + bmi + age * bmi
+  Res.Df        RSS Df Sum of Sq      F Pr(>F)
+1   1335 1.7310e+11                           
+2   1334 1.7304e+11  1  52755225 0.4067 0.5238
+
+
+Analysis of Variance Table
+
+Model 1: charges ~ smoker + age
+Model 2: charges ~ smoker + age + smoker * age
+  Res.Df        RSS Df Sum of Sq      F Pr(>F)
+1   1335 5.4626e+10                           
+2   1334 5.4565e+10  1  61050289 1.4925  0.222
+
+
+Analysis of Variance Table
+
+Model 1: charges ~ smoker + bmi
+Model 2: charges ~ smoker + bmi + smoker * bmi
+  Res.Df        RSS Df  Sum of Sq      F    Pr(>F)    
+1   1335 6.7069e+10                                   
+2   1334 5.0632e+10  1 1.6437e+10 433.06 < 2.2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+
+Analysis of Variance Table
+
+Model 1: charges ~ age + sex + bmi
+Model 2: charges ~ sex + bmi + age + age * bmi + bmi * sex + age * sex + 
+    age * bmi * sex
+  Res.Df        RSS Df Sum of Sq      F Pr(>F)
+1   1334 1.7249e+11                           
+2   1330 1.7188e+11  4 614323913 1.1884 0.3141
+
+
+Analysis of Variance Table
+
+Model 1: charges ~ smoker + bmi + age
+Model 2: charges ~ smoker + bmi + age + age * bmi + bmi * smoker + age * 
+    smoker + age * bmi * smoker
+  Res.Df        RSS Df  Sum of Sq      F    Pr(>F)    
+1   1334 4.9513e+10                                   
+2   1330 3.1996e+10  4 1.7517e+10 182.03 < 2.2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+
+
+Call:
+lm(formula = charges ~ smoker + bmi + age + age * bmi + bmi * 
+    smoker + age * smoker + age * bmi * smoker, data = healthcareins)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-12153.0  -2013.3  -1338.7   -303.7  29393.3 
+
+Coefficients:
+                    Estimate Std. Error t value Pr(>|t|)    
+(Intercept)       -1.483e+03  2.240e+03  -0.662   0.5079    
+smokeryes         -1.242e+04  4.963e+03  -2.502   0.0125 *  
+bmi               -1.943e+01  7.234e+01  -0.269   0.7883    
+age                2.458e+02  5.502e+01   4.468 8.58e-06 ***
+bmi:age            6.835e-01  1.750e+00   0.391   0.6961    
+smokeryes:bmi      1.184e+03  1.583e+02   7.481 1.34e-13 ***
+smokeryes:age     -2.068e+02  1.252e+02  -1.653   0.0987 .  
+smokeryes:bmi:age  6.624e+00  3.956e+00   1.674   0.0943 .  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 4905 on 1330 degrees of freedom
+Multiple R-squared:  0.8368,	Adjusted R-squared:  0.836 
+F-statistic: 974.3 on 7 and 1330 DF,  p-value: < 2.2e-16
+
+
+
+
+Call:
+lm(formula = charges ~ sex + bmi + children + smoker + region + 
+    sex * children + bmi * smoker + bmi * region, data = healthcareins)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-17137  -4250  -1110   2918  31969 
+
+Coefficients:
+                     Estimate Std. Error t value Pr(>|t|)    
+(Intercept)           2940.09    1781.33   1.651 0.099077 .  
+sexmale               -133.19     448.56  -0.297 0.766563    
+bmi                    192.50      58.80   3.274 0.001089 ** 
+children               860.03     197.88   4.346 1.49e-05 ***
+smokeryes           -20422.15    2078.31  -9.826  < 2e-16 ***
+regionnorthwest        -92.18    2580.66  -0.036 0.971512    
+regionsoutheast       6413.43    2377.67   2.697 0.007078 ** 
+regionsouthwest       -560.98    2505.84  -0.224 0.822893    
+sexmale:children      -456.97     275.38  -1.659 0.097263 .  
+bmi:smokeryes         1437.32      66.38  21.652  < 2e-16 ***
+bmi:regionnorthwest    -18.34      86.89  -0.211 0.832898    
+bmi:regionsoutheast   -252.16      75.15  -3.355 0.000815 ***
+bmi:regionsouthwest    -28.75      82.19  -0.350 0.726534    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 6054 on 1325 degrees of freedom
+Multiple R-squared:  0.7524,	Adjusted R-squared:  0.7501 
+F-statistic: 335.5 on 12 and 1325 DF,  p-value: < 2.2e-16
+

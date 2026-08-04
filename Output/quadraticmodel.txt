@@ -1,0 +1,29 @@
+
+Call:
+lm(formula = charges ~ age + bmi + children + sex + smoker + 
+    region + I(age^2) + I(bmi^2), data = healthcareins)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-10528  -3052  -1168   1564  30503 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(>|t|)    
+(Intercept)     -13545.825   3501.159  -3.869 0.000115 ***
+age                -57.738     80.877  -0.714 0.475419    
+bmi                801.235    207.702   3.858 0.000120 ***
+children           644.579    143.399   4.495 7.56e-06 ***
+sexmale           -139.891    330.684  -0.423 0.672339    
+smokeryes        23874.906    410.405  58.174  < 2e-16 ***
+regionnorthwest   -434.112    473.953  -0.916 0.359865    
+regionsoutheast   -995.102    475.705  -2.092 0.036642 *  
+regionsouthwest  -1011.293    475.272  -2.128 0.033536 *  
+I(age^2)             3.948      1.009   3.914 9.54e-05 ***
+I(bmi^2)            -7.407      3.270  -2.265 0.023671 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 6021 on 1327 degrees of freedom
+Multiple R-squared:  0.7547,	Adjusted R-squared:  0.7528 
+F-statistic: 408.2 on 10 and 1327 DF,  p-value: < 2.2e-16
+

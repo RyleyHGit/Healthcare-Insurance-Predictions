@@ -1,0 +1,55 @@
+Best Subset Selection
+
+Subset selection object
+Call: regsubsets.formula(charges ~ ., healthcareins, nvmax = 6)
+8 Variables  (and intercept)
+                Forced in Forced out
+age                 FALSE      FALSE
+sexmale             FALSE      FALSE
+bmi                 FALSE      FALSE
+children            FALSE      FALSE
+smokeryes           FALSE      FALSE
+regionnorthwest     FALSE      FALSE
+regionsoutheast     FALSE      FALSE
+regionsouthwest     FALSE      FALSE
+1 subsets of each size up to 6
+Selection Algorithm: exhaustive
+         age sexmale bmi children smokeryes regionnorthwest
+1  ( 1 ) " " " "     " " " "      "*"       " "            
+2  ( 1 ) "*" " "     " " " "      "*"       " "            
+3  ( 1 ) "*" " "     "*" " "      "*"       " "            
+4  ( 1 ) "*" " "     "*" "*"      "*"       " "            
+5  ( 1 ) "*" " "     "*" "*"      "*"       " "            
+6  ( 1 ) "*" " "     "*" "*"      "*"       " "            
+         regionsoutheast regionsouthwest
+1  ( 1 ) " "             " "            
+2  ( 1 ) " "             " "            
+3  ( 1 ) " "             " "            
+4  ( 1 ) " "             " "            
+5  ( 1 ) "*"             " "            
+6  ( 1 ) "*"             "*"            
+
+
+
+
+
+Call:
+lm(formula = charges ~ smoker + age + bmi, data = healthcareins)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-12415.4  -2970.9   -980.5   1480.0  28971.8 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -11676.83     937.57  -12.45   <2e-16 ***
+smokeryes    23823.68     412.87   57.70   <2e-16 ***
+age            259.55      11.93   21.75   <2e-16 ***
+bmi            322.62      27.49   11.74   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 6092 on 1334 degrees of freedom
+Multiple R-squared:  0.7475,	Adjusted R-squared:  0.7469 
+F-statistic:  1316 on 3 and 1334 DF,  p-value: < 2.2e-16
+
