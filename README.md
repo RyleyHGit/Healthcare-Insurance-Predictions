@@ -8,18 +8,19 @@ The objective of this project was to develop and compare multiple regression mod
 
 ## Dataset
 
-The dataset contains healthcare insurance information with the following predictors:
+This project uses the **Medical Insurance Cost Dataset** by Mosap Abdel-Ghany.
 
+**Source:** https://www.kaggle.com/datasets/mosapabdelghany/medical-insurance-cost-dataset
+
+The dataset is licensed under **CC0 (Public Domain)** and contains 1,338 records with the following variables:
 - Age
 - Sex
-- BMI (Body Mass Index)
-- Number of Children
-- Smoking Status
+- BMI
+- Children
+- Smoker
 - Region
+- Medical insurance charges (target variable)
 
-**Response Variable**
-
-- Insurance Charges
 
 ## Key Findings
 
