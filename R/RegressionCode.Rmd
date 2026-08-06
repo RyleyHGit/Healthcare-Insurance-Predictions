@@ -11,16 +11,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r}
-setwd("C:\\Users\\ryley\\OneDrive\\Desktop\\firebase\\Ryley\\public\\Health Insurance Cost Prediction Using Regression")
-healthcareins = read.csv("insurance.csv")
-names(healthcareins)
-```
 
-
-```{r}
-
-```
 
 Graphing Predictor Variables Against the Response Variable
 
